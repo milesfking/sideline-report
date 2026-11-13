@@ -21,6 +21,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Deploy
+
+Hosted on [Vercel](https://vercel.com) as **sideline-report**.
+
+- Production: [https://sideline-report.vercel.app](https://sideline-report.vercel.app)
+- Project: already linked locally (`.vercel/`, gitignored)
+
 ## Scripts
 
 | Command | Description |

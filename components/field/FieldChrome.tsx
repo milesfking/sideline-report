@@ -2,6 +2,7 @@
 
 import { Wordmark } from "@/components/brand/Wordmark";
 import { PixelButton } from "@/components/ui/PixelButton";
+import { formatKickoff } from "@/lib/fieldMath";
 import type { KickoffBatch } from "@/lib/schedule/batches";
 import { BATCH_LABELS } from "@/lib/schedule/batches";
 
@@ -12,6 +13,7 @@ type Props = {
   viewMode: FieldViewMode;
   onViewModeChange: (mode: FieldViewMode) => void;
   currentBatch: KickoffBatch | null;
+  batchKickoffIso: string | null;
   onReset: () => void;
 };
 
@@ -20,9 +22,16 @@ export function FieldChrome({
   viewMode,
   onViewModeChange,
   currentBatch,
+  batchKickoffIso,
   onReset,
 }: Props) {
-  const batchLabel = currentBatch ? BATCH_LABELS[currentBatch] : "—";
+  const localKickoff = formatKickoff(batchKickoffIso);
+  const batchLabel =
+    localKickoff !== "—"
+      ? localKickoff
+      : currentBatch
+        ? BATCH_LABELS[currentBatch]
+        : "—";
 
   return (
     <header className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-start justify-between gap-2 px-3 pb-2 pt-[max(0.75rem,var(--safe-top))]">

@@ -2,10 +2,11 @@ import type { ScheduleGame } from "@/lib/types";
 
 export type KickoffBatch = "thu" | "sun1" | "sun4" | "snf" | "mnf" | "other";
 
+/** Fallback when no kickoff ISO is available; prefer formatKickoff locally. */
 export const BATCH_LABELS: Record<KickoffBatch, string> = {
   thu: "THU",
-  sun1: "SUN 1ET",
-  sun4: "SUN 4ET",
+  sun1: "SUN",
+  sun4: "SUN",
   snf: "SNF",
   mnf: "MNF",
   other: "OTHER",
@@ -140,4 +141,18 @@ export function getCurrentKickoffBatch(
 export function kickoffInBatch(iso: string | null, batch: KickoffBatch | null): boolean {
   if (!iso || !batch) return false;
   return classifyKickoffBatch(iso) === batch;
+}
+
+/** Earliest kickoff in a batch — used to label the slate tab in local time. */
+export function batchRepresentativeKickoff(
+  games: ScheduleGame[],
+  batch: KickoffBatch | null,
+): string | null {
+  if (!batch || !games.length) return null;
+  const times = games
+    .filter((g) => classifyKickoffBatch(g.kickoffIso) === batch)
+    .map((g) => g.kickoffIso)
+    .filter(Boolean)
+    .sort();
+  return times[0] ?? null;
 }

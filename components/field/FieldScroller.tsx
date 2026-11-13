@@ -13,6 +13,7 @@ import { PixelButton } from "@/components/ui/PixelButton";
 import { PixelSheet } from "@/components/ui/PixelSheet";
 import { formatKickoff, placePlayers } from "@/lib/fieldMath";
 import {
+  batchRepresentativeKickoff,
   getCurrentKickoffBatch,
   kickoffInBatch,
 } from "@/lib/schedule/batches";
@@ -30,6 +31,11 @@ export function FieldScroller() {
     if (!report?.games?.length) return null;
     return getCurrentKickoffBatch(report.games);
   }, [report]);
+
+  const batchKickoffIso = useMemo(() => {
+    if (!report?.games?.length) return null;
+    return batchRepresentativeKickoff(report.games, currentBatch);
+  }, [report, currentBatch]);
 
   // Place the full week set once so batch/week toggle keeps identical jitter.
   const weekCoords = useMemo(() => {
@@ -97,6 +103,7 @@ export function FieldScroller() {
         viewMode={viewMode}
         onViewModeChange={setViewMode}
         currentBatch={currentBatch}
+        batchKickoffIso={batchKickoffIso}
         onReset={() => setConfirmReset(true)}
       />
 
