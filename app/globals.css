@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+:root {
+  --turf-deep: #1a5c2e;
+  --turf-mid: #2d8a45;
+  --turf-light: #3aa856;
+  --turf-stripe-a: #2a7a3c;
+  --turf-stripe-b: #267038;
+  --chalk: #f2efe4;
+  --chalk-dim: rgba(242, 239, 228, 0.55);
+  --hash: rgba(242, 239, 228, 0.28);
+
+  --ink: #0e1a12;
+  --ink-muted: #3d4f42;
+  --cream: #f7f3e8;
+  --accent: #e85d04;
+  --accent-hot: #c1121f;
+  --live-gold: #ffd60a;
+  --sky: #87b8d8;
+  --sky-light: #c5dff0;
+  --pixel-border: #0e1a12;
+  --pixel-shadow: #0a120c;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --radius-pixel: 0;
+  --border-pixel: 3px solid var(--pixel-border);
+
+  --field-vh: 300;
+  --safe-top: env(safe-area-inset-top);
+  --safe-bot: env(safe-area-inset-bottom);
+
+  --ease-snap: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-med: 280ms;
+  --dur-slow: 600ms;
+
+  --background: var(--sky-light);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-silkscreen);
+  --font-mono: var(--font-plex-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+.pixel-btn {
+  border: 3px solid var(--pixel-border);
+  box-shadow: 3px 3px 0 var(--pixel-shadow);
+  transition:
+    transform var(--dur-fast) var(--ease-snap),
+    box-shadow var(--dur-fast) var(--ease-snap);
+}
+
+.pixel-btn:not(:disabled):active,
+.pixel-btn.pressed {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--pixel-shadow);
+}
+
+.sky-scene {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.45) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.35) 0 3px, transparent 4px),
+    radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.25) 0 2px, transparent 3px),
+    linear-gradient(180deg, var(--sky) 0%, var(--sky-light) 55%, var(--turf-light) 55%, var(--turf-mid) 100%);
+}
+
+.field-scroller {
+  -webkit-overflow-scrolling: touch;
+}
+
+.field-surface {
+  background: repeating-linear-gradient(
+    180deg,
+    var(--turf-stripe-a) 0 32px,
+    var(--turf-stripe-b) 32px 64px
+  );
+}
+
+.endzone-for {
+  background: linear-gradient(
+    180deg,
+    rgba(212, 175, 55, 0.35),
+    transparent
+  );
+}
+
+.endzone-against {
+  background: linear-gradient(
+    0deg,
+    rgba(193, 18, 31, 0.28),
+    transparent
+  );
+}
+
+.player-marker.is-live {
+  z-index: 3;
+}
+
+.player-marker {
+  animation-fill-mode: both;
+}
+
+.player-marker .marker-plate {
+  animation: marker-bob 2.4s ease-in-out infinite;
+}
+
+@keyframes brand-snap {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-brand-snap {
+  animation: brand-snap var(--dur-slow) steps(4) both;
+}
+
+@keyframes pixel-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.animate-pixel-shake {
+  animation: pixel-shake 280ms steps(2);
+}
+
+@keyframes care-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.animate-care-bounce:not(:disabled) {
+  animation: care-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes marker-drop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -70%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.animate-marker-drop {
+  animation-name: marker-drop;
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease-snap);
+}
+
+@keyframes marker-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-sheet-up {
+  animation: sheet-up var(--dur-med) var(--ease-snap);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-brand-snap,
+  .animate-pixel-shake,
+  .animate-care-bounce,
+  .animate-marker-drop,
+  .animate-sheet-up,
+  .player-marker .marker-plate {
+    animation: none !important;
+  }
+}
