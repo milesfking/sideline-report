@@ -1,8 +1,8 @@
 # Sideline Report
 
-Mobile-first Sleeper fantasy football app that ranks players from **root for** to **root against** based on your leagues, weekly opponents, and how much you care about each league.
+Sleeper fantasy football app that ranks players from **root for** to **root against** based on your leagues, weekly opponents, and how much you care about each league.
 
-Enter a Sleeper username → set league interest → scroll a field of starters for the current kickoff batch (or the full week).
+Enter a Sleeper username, set league interest, and scroll a field of starters for the current slate or full upcoming week.
 
 ## Stack
 
